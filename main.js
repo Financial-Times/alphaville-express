@@ -41,8 +41,7 @@ module.exports = function (options) {
 
 	alphavilleHbs.handlebars.partials = {
 		header: fs.readFileSync(path.join(options.directory, 'bower_components/alphaville-header/main.handlebars'), 'utf-8'),
-		footer: fs.readFileSync(path.join(options.directory, 'bower_components/alphaville-footer/main.handlebars'), 'utf-8'),
-		ctm: fs.readFileSync(path.join(__dirname, 'templates/ctm.handlebars'), 'utf-8')
+		footer: fs.readFileSync(path.join(options.directory, 'bower_components/alphaville-footer/main.handlebars'), 'utf-8')
 	};
 
 	const defaultOptions = {
@@ -50,10 +49,12 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		ctmCoreClass: 'core',
 		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated',
 		headerConfig: headerConfig.setSelected(options.navSelected)
 	};
+
+	app.engine('handlebars', alphavilleHbs.engine);
+	app.set('view engine', 'handlebars');
 
 	app.use( function( req, res, next ) {
 		const _render = res.render;
@@ -64,9 +65,6 @@ module.exports = function (options) {
 		};
 		next();
 	});
-
-	app.engine('handlebars', alphavilleHbs.engine);
-	app.set('view engine', 'handlebars');
 
 
 
