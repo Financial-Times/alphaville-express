@@ -1,7 +1,7 @@
 {
   "name": "alphaville-express",
   "private": true,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Generic express setup for Alphaville2 project.",
   "author": "Roland Vachter",
   "main": "main.js",
