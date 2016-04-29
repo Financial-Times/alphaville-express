@@ -45,10 +45,8 @@ module.exports = function (options) {
 		ctm: fs.readFileSync(path.join(__dirname, 'templates/ctm.handlebars'), 'utf-8')
 	};
 
-	const fingerprint = require(path.join(options.directory, 'build_config/js/fingerprint.js'));
-
 	const defaultOptions = {
-		assetsBasePath: path.join((environment === 'prod' ? '//alphaville-h2.ft.com' : ''), 'assets', options.appBasePath, fingerprint),
+		assetsBasePath: path.join((environment === 'prod' ? '//alphaville-h2.ft.com' : ''), 'assets', options.appBasePath, options.fingerprint),
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
