@@ -85,9 +85,9 @@ module.exports = function (options) {
 
 		res.sendFile(path.join(options.directory, '/bower_components', newPath));
 	});
-	app.use(`/assets/${options.appBasePath}/:fingerprint/`, express.static(path.join(options.directory, 'public', {
+	app.use(`/assets/${options.appBasePath}/:fingerprint/`, express.static(path.join(options.directory, 'public'), {
 		maxage: environment === 'prod' ? ayear : 0
-	})));
+	}));
 
 
 	return app;
