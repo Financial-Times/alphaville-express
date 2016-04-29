@@ -1,0 +1,91 @@
+<!--
+	Perform your cuts the mustard test.
+	For information about what features come bundled with other
+	features in all browsers, see caniuse.com
+-->
+<script>
+	var cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window);
+
+	if (cutsTheMustard) {
+		// Swap the `core` class on the HTML element for an `enhanced` one
+		// We're doing it early in the head to avoid a flash of unstyled content
+		document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
+	}
+
+
+	function ctmLoadScript (config, callback) {
+		if (cutsTheMustard) {
+			var head = document.head || document.getElementsByTagName('head')[0];
+			callback = callback || function () {};
+
+			callbackIssued = false;
+
+			var error = function (e) {
+				if (!callbackIssued) {
+					callbackIssued = true;
+
+					callback(e || new Error("Timeout"));
+				}
+			};
+
+			var success = function () {
+				if (!callbackIssued) {
+					callbackIssued = true;
+
+					callback(null);
+				}
+			};
+
+			script = document.createElement("script");
+			script.async = (config.async === false ? false : true);
+
+			if (config.charset) {
+				script.charset = config.charset;
+			}
+
+			script.src = config.src;
+
+			var destroy = function () {
+				if (script) {
+					// Handle memory leak in IE
+					script.onload = script.onreadystatechange = null;
+
+					// Remove the script
+					if ( script.parentNode ) {
+						script.parentNode.removeChild( script );
+					}
+
+					// Dereference the script
+					script = null;
+				}
+			};
+
+			script.onload = script.onreadystatechange = function( _, isAbort ) {
+				if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
+					destroy();
+
+					if (isAbort) {
+						error(new Error("Aborted."));
+						return;
+					}
+
+					success();
+				}
+			};
+
+			script.onerror = function () {
+				destroy();
+				error(new Error("Error loading script."));
+			};
+
+			head.insertBefore( script, head.firstChild );
+		}
+	}
+</script>
+
+<style>
+	/* Hide any enhanced experience content when in core mode, and vice versa. */
+	.core .o--if-js,
+	.enhanced .o--if-no-js { display: none !important; }
+	/* Add any other inline styles here */
+</style>
