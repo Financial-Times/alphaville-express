@@ -8,11 +8,10 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const headerConfig = require('alphaville-header-config');
 
-const environment = process.env.ENVIRONMENT || 'test';
-
-
 
 module.exports = function (options) {
+	const environment = options.env || 'test';
+
 	const app = express();
 
 	app.set('views', path.join(options.directory, 'views'));
