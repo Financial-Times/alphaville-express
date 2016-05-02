@@ -44,7 +44,8 @@ module.exports = function (options) {
 	};
 
 	const defaultOptions = {
-		assetsBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/'+ 'assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
+		assetsBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
+		assetsBowerBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets/'+ options.appBasePath +'/bower/' + options.fingerprint,
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
