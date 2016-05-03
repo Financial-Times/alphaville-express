@@ -19,7 +19,10 @@ module.exports = function (options) {
 	const alphavilleHbs = exphbs.create({
 		defaultLayout: path.join(__dirname, 'templates/layout'),
 		extname: '.handlebars',
-		partialsDir: path.join(options.directory, 'views', 'partials'),
+		partialsDir: [
+			path.join(options.directory, 'views', 'partials'),
+			path.join(options.directory, 'bower_components')
+		],
 		helpers: {
 			block: function (name) {
 				const blocks = this._blocks;
@@ -36,11 +39,6 @@ module.exports = function (options) {
 			}
 		}
 	});
-
-	alphavilleHbs.handlebars.partials = {
-		header: fs.readFileSync(path.join(options.directory, 'bower_components/alphaville-header/main.handlebars'), 'utf-8'),
-		footer: fs.readFileSync(path.join(options.directory, 'bower_components/alphaville-footer/main.handlebars'), 'utf-8')
-	};
 
 	const defaultOptions = {
 		assetsBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
@@ -65,14 +63,10 @@ module.exports = function (options) {
 		next();
 	});
 
-
-
 	app.use(logger('dev'));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(cookieParser());
-
-
 
 	const ayear = 365 * 24 * 60 * 60 * 1000;
 
@@ -88,7 +82,6 @@ module.exports = function (options) {
 	app.use(`/assets/${options.appBasePath}/:fingerprint/`, express.static(path.join(options.directory, 'public'), {
 		maxage: environment === 'prod' ? ayear : 0
 	}));
-
 
 	return app;
 };
