@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -56,9 +58,8 @@ module.exports = function (options) {
 	app.use( function( req, res, next ) {
 		const _render = res.render;
 		res.render = function( view, options, fn ) {
-			Object.assign(options, defaultOptions);
-
-			_render.call( this, view, options, fn );
+			let viewModel = Object.assign({}, options, defaultOptions);
+			_render.call( this, view, viewModel, fn );
 		};
 		next();
 	});
