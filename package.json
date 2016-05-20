@@ -16,6 +16,6 @@
     "express": "~4.13.1",
     "express-handlebars": "^3.0.0",
     "morgan": "~1.6.1",
-    "alphaville-header-config": "Financial-Times/alphaville-header-config#0.1.2"
+    "alphaville-header-config": "Financial-Times/alphaville-header-config#0.1.3"
   }
 }
