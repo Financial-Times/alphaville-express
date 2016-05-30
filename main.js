@@ -48,29 +48,26 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated'
+		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated',
+		headerConfig: headerConfig.setSelected(options.navSelected)
 	};
 
 	app.engine('handlebars', alphavilleHbs.engine);
 	app.set('view engine', 'handlebars');
 
-	app.use(cookieParser());
-	app.use(logger('dev'));
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: false }));
-
 	app.use( function( req, res, next ) {
 		const _render = res.render;
 		res.render = function( view, options, fn ) {
-			const viewModel = Object.assign({}, options, defaultOptions, {
-				headerConfig: headerConfig.get(options.navSelected, req.cookies['FTSession'] ? true : false)
-			});
+			let viewModel = Object.assign({}, options, defaultOptions);
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
 	});
 
-
+	app.use(logger('dev'));
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(cookieParser());
 
 	const ayear = 365 * 24 * 60 * 60 * 1000;
 
