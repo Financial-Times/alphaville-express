@@ -89,6 +89,12 @@
 					head.insertBefore( script, head.firstChild );
 				}
 			}
+
+			if (document.cookie.indexOf('FTSession') !== -1) {
+				document.documentElement.className += ' av2-logged-in';
+			} else {
+				document.documentElement.className += ' av2-logged-out';
+			}
 		</script>
 
 		<style>
@@ -96,6 +102,14 @@
 			.core .o--if-js,
 			.enhanced .o--if-no-js { display: none !important; }
 			/* Add any other inline styles here */
+
+			.av2-logged-in .av2-logged-in-hidden {
+				display: none;
+			}
+
+			.av2-logged-out .av2-logged-out-hidden {
+				display: none;
+			}
 		</style>
 
 
