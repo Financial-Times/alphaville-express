@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const exphbs = require('express-handlebars');
-const headerConfig = require('alphaville-header-config');
 
 
 module.exports = function (options) {
@@ -42,6 +41,15 @@ module.exports = function (options) {
 		}
 	});
 
+	if (options.headerConfig && options.headerConfig.navItems && options.navSelected) {
+		options.headerConfig.navItems.map(function (obj) {
+			if (obj.name.indexOf(options.navSelected) > -1) {
+				obj.selected = true;
+			}
+			return obj;
+		});
+	}
+
 	const defaultOptions = {
 		assetsBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
 		assetsBowerBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets/'+ options.appBasePath +'/bower/' + options.fingerprint,
@@ -49,7 +57,7 @@ module.exports = function (options) {
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
 		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated',
-		headerConfig: headerConfig.setSelected(options.navSelected)
+		headerConfig: options.headerConfig
 	};
 
 	app.engine('handlebars', alphavilleHbs.engine);
