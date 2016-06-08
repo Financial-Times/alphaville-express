@@ -56,7 +56,7 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated&exclude=Symbol,Symbol.iterator,Symbol.species,Map,Set',
+		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set',
 		headerConfig: options.headerConfig
 	};
 
