@@ -118,8 +118,17 @@
 		<script src="//js.pusher.com/3.1.0/pusher.min.js"></script>
 
 		{{{block "head"}}}
+
+
+		{{#isTest}}
+			{{> alphaville-ads/config/test}}
+		{{/isTest}}
+		{{#isProd}}
+			{{> alphaville-ads/config/prod}}
+		{{/isProd}}
 	</head>
 	<body>
+		{{> alphaville-ads/templates/leaderboard}}
 		{{#headerConfig}}
 			{{> alphaville-header/main}}
 		{{/headerConfig}}
