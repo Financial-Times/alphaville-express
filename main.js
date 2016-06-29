@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const _ = require('lodash');
 const express = require('express');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -66,7 +67,7 @@ module.exports = function (options) {
 	app.use( function( req, res, next ) {
 		const _render = res.render;
 		res.render = function( view, options, fn ) {
-			let viewModel = Object.assign({}, options, defaultOptions);
+			let viewModel = _.merge({}, options, defaultOptions);
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
