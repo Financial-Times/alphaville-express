@@ -43,11 +43,24 @@ module.exports = function (options) {
 	});
 
 	if (options.headerConfig && options.headerConfig.navItems && options.navSelected) {
-		options.headerConfig.navItems.map(function (obj) {
+		options.headerConfig.navItems.map((obj) => {
 			if (obj.name.indexOf(options.navSelected) > -1) {
 				obj.selected = true;
 			}
 			return obj;
+		});
+	}
+
+	if (options.headerConfig && options.headerConfig.meganavSections && options.navSelected) {
+		options.headerConfig.meganavSections.forEach((section) => {
+			if (section.meganavSectionItems) {
+				section.meganavSectionItems.map((obj) => {
+					if (obj.name.indexOf(options.navSelected) > -1) {
+						obj.selected = true;
+					}
+					return obj;
+				});
+			}
 		});
 	}
 
