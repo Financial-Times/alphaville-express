@@ -19,7 +19,7 @@ module.exports = function (options) {
 	app.set('views', path.join(options.directory, 'views'));
 
 	const alphavilleHbs = exphbs.create({
-		defaultLayout: path.join(__dirname, 'templates/layout'),
+		defaultLayout: path.join(options.directory, 'bower_components/alphaville-ui/layout'),
 		extname: '.handlebars',
 		partialsDir: [
 			path.join(options.directory, 'views', 'partials'),
