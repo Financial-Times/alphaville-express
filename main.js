@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
 const _ = require('lodash');
 const express = require('express');
 const logger = require('morgan');
@@ -9,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const exphbs = require('express-handlebars');
+const headerConfig = require('alphaville-header-config');
 
 
 module.exports = function (options) {
@@ -42,32 +42,10 @@ module.exports = function (options) {
 		}
 	});
 
-	function selectNavItem (navSelected) {
-		const headerConfig = _.cloneDeep(options.headerConfig);
+	function getNavItems (navSelected) {
+		const navItems = headerConfig.get(navSelected);
 
-		if (headerConfig && headerConfig.navItems) {
-			headerConfig.navItems.map((obj) => {
-				if (obj.name.indexOf(navSelected) > -1) {
-					obj.selected = true;
-				}
-				return obj;
-			});
-		}
-
-		if (headerConfig && headerConfig.meganavSections) {
-			headerConfig.meganavSections.forEach((section) => {
-				if (section.meganavSectionItems) {
-					section.meganavSectionItems.map((obj) => {
-						if (obj.name.indexOf(navSelected) > -1) {
-							obj.selected = true;
-						}
-						return obj;
-					});
-				}
-			});
-		}
-
-		return headerConfig;
+		return navItems;
 	}
 
 	const defaultOptions = {
@@ -76,8 +54,7 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set',
-		headerConfig: options.navSelected ? selectNavItem(options.navSelected) : options.headerConfig
+		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 	};
 
 	app.engine('handlebars', alphavilleHbs.engine);
@@ -89,7 +66,9 @@ module.exports = function (options) {
 			const viewModel = _.merge({}, viewOptions, defaultOptions);
 
 			if (viewOptions.navSelected) {
-				viewModel.headerConfig = selectNavItem(viewOptions.navSelected);
+				viewModel.headerConfig = getNavItems(viewOptions.navSelected);
+			} else {
+				viewModel.headerConfig = getNavItems(options.navSelected);
 			}
 
 			_render.call( this, view, viewModel, fn );
