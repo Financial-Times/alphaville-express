@@ -71,6 +71,10 @@ module.exports = function (options) {
 				viewModel.headerConfig = getNavItems(options.navSelected);
 			}
 
+			if (viewOptions.headerConfig) {
+				viewModel.headerConfig = _.merge({}, viewModel.headerConfig, viewOptions.headerConfig);
+			}
+
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
