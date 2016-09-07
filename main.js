@@ -65,16 +65,12 @@ module.exports = function (options) {
 		res.render = function( view, viewOptions, fn ) {
 			const viewModel = _.merge({}, viewOptions, defaultOptions);
 
-			if (viewOptions.navSelected) {
-				viewModel.headerConfig = getNavItems(viewOptions.navSelected);
-			} else {
-				viewModel.headerConfig = getNavItems(options.navSelected);
+			if (viewOptions) {
+				viewModel.headerConfig = _.merge(
+					{},
+					getNavItems(viewOptions.navSelected || options.navSelected),
+					viewOptions.headerConfig);
 			}
-
-			if (viewOptions.headerConfig) {
-				viewModel.headerConfig = _.merge({}, viewModel.headerConfig, viewOptions.headerConfig);
-			}
-
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
