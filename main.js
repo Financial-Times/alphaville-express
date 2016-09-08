@@ -72,15 +72,11 @@ module.exports = function (options) {
 		res.render = function( view, viewOptions, fn ) {
 			const viewModel = _.merge({}, viewOptions, defaultOptions);
 
-			if (viewOptions.navSelected) {
-				viewModel.headerConfig = getNavItems(viewOptions.navSelected);
-			} else {
-				viewModel.headerConfig = getNavItems(options.navSelected);
-			}
-
-			if (viewOptions.headerConfig) {
-				viewModel.headerConfig = _.merge({}, viewModel.headerConfig, viewOptions.headerConfig);
-			}
+			viewModel.headerConfig = _.extend(
+				{},
+				viewModel.headerConfig,
+				getNavItems(viewModel.navSelected || options.navSelected)
+			);
 
 			if (req.cookies.FTSession) {
 				viewModel.userIsLoggedIn = true;
