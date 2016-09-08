@@ -60,8 +60,15 @@ module.exports = function (options) {
 	app.engine('handlebars', alphavilleHbs.engine);
 	app.set('view engine', 'handlebars');
 
+
+	app.use(logger('dev'));
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(cookieParser());
+
 	app.use( function( req, res, next ) {
 		const _render = res.render;
+
 		res.render = function( view, viewOptions, fn ) {
 			const viewModel = _.merge({}, viewOptions, defaultOptions);
 
@@ -75,15 +82,14 @@ module.exports = function (options) {
 				viewModel.headerConfig = _.merge({}, viewModel.headerConfig, viewOptions.headerConfig);
 			}
 
+			if (req.cookies.FTSession) {
+				viewModel.userIsLoggedIn = true;
+			}
+
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
 	});
-
-	app.use(logger('dev'));
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(cookieParser());
 
 	const ayear = 365 * 24 * 60 * 60 * 1000;
 
