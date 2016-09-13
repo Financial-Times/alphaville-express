@@ -38,6 +38,14 @@ module.exports = function (options) {
 				const block = blocks[name] || (blocks[name] = []);
 
 				block.push(options.fn(this));
+			},
+
+			if: function(conditional, options) {
+				if(conditional) {
+					return options.fn(this);
+				} else {
+					return options.inverse(this);
+				}
 			}
 		}
 	});
