@@ -66,6 +66,14 @@ module.exports = function (options) {
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(cookieParser());
 
+	app.use(function(req, res, next) {
+		if (req.headers['ft-original-host']) {
+			req.hostname = req.headers['ft-original-host'];
+		}
+
+		next();
+	});
+
 	app.use( function( req, res, next ) {
 		const _render = res.render;
 
