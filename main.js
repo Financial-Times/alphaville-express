@@ -6,6 +6,7 @@ const express = require('express');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 
 const exphbs = require('express-handlebars');
 const headerConfig = require('alphaville-header-config');
@@ -65,6 +66,7 @@ module.exports = function (options) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(cookieParser());
+	app.use(compression());
 
 	app.use( function( req, res, next ) {
 		const _render = res.render;
