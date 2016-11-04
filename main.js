@@ -80,10 +80,6 @@ module.exports = function (options) {
 				getNavItems(viewModel.navSelected || options.navSelected)
 			);
 
-			if (req.cookies.FTSession) {
-				viewModel.userIsLoggedIn = true;
-			}
-
 			_render.call( this, view, viewModel, fn );
 		};
 		next();
