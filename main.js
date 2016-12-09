@@ -87,7 +87,7 @@ module.exports = function (options) {
 
 	const ayear = 365 * 24 * 60 * 60 * 1000;
 
-	app.get(`/assets/${options.appBasePath}/bower/:fingerprint/*.(woff|svg|ttf|eot|gif|png|jpg)`, (req, res) => {
+	app.get(`/assets/${options.appBasePath}/bower/:fingerprint/*.(woff|svg|ttf|eot|gif|png|jpg|js|css)`, (req, res) => {
 		const newPath = req.originalUrl.split('/').slice(5).join('/');
 
 		if (environment === 'prod') {
