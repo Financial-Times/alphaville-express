@@ -50,12 +50,12 @@ module.exports = function (options) {
 	}
 
 	const defaultOptions = {
-		assetsBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
-		assetsBowerBasePath: (environment === 'prod' ? '//alphaville-h2.ft.com' : '') +'/assets/'+ options.appBasePath +'/bower/' + options.fingerprint,
+		assetsBasePath: '/assets' +'/'+ options.appBasePath +'/'+ options.fingerprint,
+		assetsBowerBasePath: '/assets/'+ options.appBasePath +'/bower/' + options.fingerprint,
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//alphaville-h2.ft.com/polyfill/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
+		polyfillServiceUrl: '//cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 	};
 
 	app.engine('handlebars', alphavilleHbs.engine);
