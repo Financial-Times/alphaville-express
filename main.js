@@ -55,7 +55,8 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
+		polyfillServiceUrl: '//cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch|gated&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set',
+		copyrightYear: new Date().getFullYear()
 	};
 
 	app.engine('handlebars', alphavilleHbs.engine);
