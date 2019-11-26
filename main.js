@@ -55,7 +55,7 @@ module.exports = function (options) {
 		basePath: '/' + options.appBasePath,
 		isTest: environment === 'test' ? true : false,
 		isProd: environment === 'prod' ? true : false,
-		polyfillServiceUrl: '//cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch|gated',
+		polyfillServiceUrl: '//polyfill.io/v3/polyfill.min.js?flags=gated&features=Element.prototype.classList%2CArray.from%2Cfetch%2Cdefault',
 		copyrightYear: new Date().getFullYear()
 	};
 
