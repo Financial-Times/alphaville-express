@@ -1,3 +1,5 @@
+# REPO IS NO LONGER IN USER - FUNCTIONALITY HAS BEEN MERGED INTO `alphaville-longroom`
+
 # alphaville-express
 
 Wrapper around express, with default setup for Alphaville 2 projects. It includes default middlewares, templating setup with handlebars, default layout and template variables for templates, routes for assets (in-project and bower) with support for fingerprints and caching.
